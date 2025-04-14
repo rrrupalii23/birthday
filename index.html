@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Love Letter Puzzle 💌</title>
+  <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://i.imgur.com/1ZQZ1Zm.png');
+      font-family: 'Minecraftia', sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-size: cover;
+      color: #333;
+    }
+
+    .letter-box {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      border: 5px solid #8B4513;
+      border-radius: 0;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .heart-button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      border: 3px solid #006400;
+      background-color: #7CFC00;
+      color: #333;
+      cursor: pointer;
+      font-family: 'Minecraftia', sans-serif;
+      box-shadow: 0 4px #006400;
+      transition: transform 0.1s ease-in-out;
+    }
+
+    .heart-button:hover {
+      background-color: #32CD32;
+      transform: scale(1.05);
+    }
+
+    .line {
+      display: none;
+      margin: 15px 0;
+      font-size: 1.1em;
+      color: #2e8b57;
+      animation: typing 1s steps(40, end), fadeIn 1s ease-in-out;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #2e8b57;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    #slideshow {
+      display: none;
+      margin-top: 40px;
+    }
+
+    .memory {
+      margin-bottom: 30px;
+    }
+
+    #slideshow img {
+      width: 280px;
+      border: 4px solid #654321;
+      border-radius: 4px;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.4);
+    }
+
+    .caption {
+      color: #3e3e3e;
+      background: #d2b48c;
+      display: inline-block;
+      padding: 5px 10px;
+      margin-top: 5px;
+      font-size: 0.9em;
+      border: 2px solid #8B4513;
+    }
+
+    #popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      padding: 30px;
+      border: 5px solid #8B4513;
+      z-index: 10;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    #popup h3 {
+      color: #228B22;
+    }
+
+    #popup button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #7CFC00;
+      color: #333;
+      border: 3px solid #006400;
+      font-family: 'Minecraftia', sans-serif;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎶 Background Music -->
+  <audio autoplay loop>
+    <source src="bgmusic.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- 🔊 Typewriter Sound -->
+  <audio id="typeSound" src="type.mp3" preload="auto"></audio>
+
+  <div class="letter-box">
+    <h2>A Special Note for You</h2>
+    <div class="line">Time spent with you never feels wasted..</div>
+    <div class="line">You light up my world brighter than glowstone..</div>
+    <div class="line">You build joy into every block of my life.. </div>
+    <div class="line">You’re not just a friend, you're my safe space..</div>
+    <div class="line">I'll be there whenever you'll need me..</div>
+    <div class="line">Let's keep crafting memories..</div>
+    <button class="heart-button">Tap to Reveal</button>
+  </div>
+
+  <!-- 🖼️ Slideshow -->
+  <div id="slideshow">
+    <h3>No photos, but some fun conversations to look back on!</h3>
+
+    <div class="memory">
+      <img src="photo1.jpeg" alt="Memory 1">
+    </div>
+
+    <div class="memory">
+      <img src="photo2.jpeg" alt="Memory 2">
+    </div>
+
+    <div class="memory">
+      <img src="photo3.jpeg" alt="Memory 3">
+    </div>
+
+    <div class="memory">
+        <img src="photo4.jpeg" alt="memory4">
+    </div>
+  </div>
+
+  <!-- 🎈 Final Popup -->
+  <div id="popup">
+    <h3> You're My Favorite Person</h3>
+    <p>This note, these memories, and this friendship mean everything to me.</p>
+    <button onclick="document.getElementById('popup').style.display='none'">💕</button>
+  </div>
+
+  <!-- 🎉 Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const button = document.querySelector('.heart-button');
+    const lines = document.querySelectorAll('.line');
+    const typeSound = document.getElementById('typeSound');
+    let index = 0;
+
+    button.addEventListener('click', () => {
+      if (index < lines.length) {
+        lines[index].style.display = 'inline-block';
+        typeSound.currentTime = 0;
+        typeSound.play();
+        index++;
+        if (index === lines.length) {
+          button.textContent = "HAPPY BIRTHDAY!!";
+          button.disabled = true;
+          button.style.backgroundColor = "#aaa";
+          // Confetti burst!
+          confetti({
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.6 }
+          });
+          // Show slideshow
+          document.getElementById('slideshow').style.display = 'block';
+          // Show popup after a moment
+          setTimeout(() => {
+            document.getElementById('popup').style.display = 'block';
+          }, 2000);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
